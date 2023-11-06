@@ -6,6 +6,9 @@
                 @User.Identity.Name
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" asp-action="Index" asp-controller="Member">Profil</a></li>
+                <li><a class="dropdown-item" asp-action="PasswordChange" asp-controller="Member">Şifre Değiştir</a></li>
+                <li><a class="dropdown-item" asp-action="UserEdit" asp-controller="Member">Profil Düzenle</a></li>
                 <li><a class="dropdown-item" asp-route-returnurl="/Home/Index" asp-action="Logout" asp-controller="Member">Çıkış Yap</a></li>
             </ul>
         </li>
