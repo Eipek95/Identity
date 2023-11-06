@@ -8,8 +8,6 @@
 }
 
 
-
-
 <div class="container">
     <div class="col-md-6 offset-md-3">
         <h2>Kullanıcı Bilgi Güncelleme</h2>
@@ -22,9 +20,8 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
         </div>
         <form asp-action="UserEdit" asp-controller="Member" method="post" enctype="multipart/form-data">
-
             <div class="row mb-3">
-                <label for="UserName" class="col-md-4 col-form-label" asp-for="UserName"></label>
+                <label class="col-md-4 col-form-label" asp-for="UserName"></label>
                 <div class="col-md-8">
                     <input asp-for="UserName" class="form-control">
                     <span class="text-danger" asp-validation-for="UserName"></span>
@@ -32,35 +29,35 @@
             </div>
 
             <div class="row mb-3">
-                <label for="Email" class="col-md-4 col-form-label" asp-for="Email"></label>
+                <label class="col-md-4 col-form-label" asp-for="Email"></label>
                 <div class="col-md-8">
                     <input asp-for="Email" class="form-control">
                     <span class="text-danger" asp-validation-for="Email"></span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="PasswordNewConfirm" class="col-md-4 col-form-label" asp-for="Phone"></label>
+                <label class="col-md-4 col-form-label" asp-for="Phone"></label>
                 <div class="col-md-8">
                     <input asp-for="Phone" class="form-control">
                     <span class="text-danger" asp-validation-for="Phone"></span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="BirthDate" class="col-md-4 col-form-label" asp-for="BirthDate"></label>
+                <label class="col-md-4 col-form-label" asp-for="BirthDate"></label>
                 <div class="col-md-8">
                     <input asp-for="BirthDate" class="form-control">
                     <span class="text-danger" asp-validation-for="BirthDate"></span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="City" class="col-md-4 col-form-label" asp-for="City"></label>
+                <label class="col-md-4 col-form-label" asp-for="City"></label>
                 <div class="col-md-8">
                     <input asp-for="City" class="form-control">
                     <span class="text-danger" asp-validation-for="City"></span>
                 </div>
             </div>
              <div class="row mb-3">
-                <label for="Gender" class="col-md-4 col-form-label" asp-for="Gender"></label>
+                <label class="col-md-4 col-form-label" asp-for="Gender"></label>
                 <div class="col-md-8">
                     <select class="form-control" asp-for="Gender" asp-items="ViewBag.genderList">
                         <option value="">Cinsiyet Seçiniz</option>
@@ -69,7 +66,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="Picture" class="col-md-4 col-form-label" asp-for="Picture"></label>
+                <label for="PasswordConfirm" class="col-md-4 col-form-label" asp-for="Picture"></label>
                 <div class="col-md-8">
                     <input class="form-control" type="file" asp-for="Picture" />
                     <span class="text-danger" asp-validation-for="Picture"></span>

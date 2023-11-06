@@ -1,0 +1,39 @@
+﻿@model List<AdminModel.RoleViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+@* offset soldan bosluk bırakır *@
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <h2>Roller</h2>
+    </div>
+    <div class="col-md-2 text-end">
+        <a asp-action="RoleCreate" asp-controller="Roles" asp-area="Admin" class="btn btn-outline-primary">Rol Ekle</a>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-8 offset-md-2">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Rol Adı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.RoleName</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+

@@ -4,6 +4,7 @@ using AspNetCoreIdentityApp.Web.OptionsModels;
 using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,9 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
     options.ValidationInterval = TimeSpan.FromMinutes(30);//varsayýlan deðer
 });
+
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));//wwwroot veya projenin herhamgi bir yerinden bir klasöre eriþmek istersek bu yolla kolaylýkla ulaþabiliriz 
+
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddIdentityWithExt();//identity ayarlarýnýn yapýldýgý class
