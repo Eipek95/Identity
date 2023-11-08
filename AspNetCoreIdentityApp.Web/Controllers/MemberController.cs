@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -72,10 +73,11 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             TempData["SuccessMessage"] = "Şifreniz Başarıyla Değiştirilmiştir.";
             return View();
         }
-
+        [HttpGet]
         public async Task<IActionResult> UserEdit()
         {
             ViewBag.genderList = new SelectList(Enum.GetNames(typeof(Gender)));
+
             var currentUser = (await _userManager.FindByNameAsync(User.Identity!.Name!))!;
 
             var userEditViewModel = new UserEditViewModel()
@@ -115,12 +117,16 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             {
 
                 var wwwrootFolder = _fileProvider.GetDirectoryContents("wwwroot");
-                string fullPath = Path.Combine(wwwrootFolder!.First(x => x.Name == "userpictures").PhysicalPath!, currentUser.Picture);
-                if (System.IO.File.Exists(fullPath))
+                var result = currentUser.Picture;
+                if (!result.IsNullOrEmpty())
                 {
-                    System.IO.File.Delete(fullPath);
-                }
+                    string fullPath = Path.Combine(wwwrootFolder!.First(x => x.Name == "userpictures").PhysicalPath!, result);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
 
+                }
 
                 string randomFileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(request.Picture.FileName)}";
                 var newPicturePath = Path.Combine(wwwrootFolder!.First(x => x.Name == "userpictures").PhysicalPath!, randomFileName);
@@ -144,8 +150,25 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             TempData["SuccessMessage"] = "Üye Bilgileri Başarıyla Değiştirilmiştir.";
 
+            var userEditViewModel = new UserEditViewModel()
+            {
+                UserName = currentUser.UserName!,
+                Email = currentUser.Email!,
+                Phone = currentUser.PhoneNumber!,
+                BirthDate = currentUser.BirthDate,
+                City = currentUser.City,
+                Gender = currentUser.Gender
+            };
 
+            return View(userEditViewModel);
+        }
 
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            string message = string.Empty;
+
+            message = "Bu Sayfayı Görmek için yetkiniz yoktur.Yetki Almak için yöneticiniz ile görüşebilirsiniz.";
+            ViewBag.message = message;
             return View();
         }
     }
