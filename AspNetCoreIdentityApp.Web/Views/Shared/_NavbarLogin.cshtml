@@ -1,4 +1,5 @@
-﻿@if (User.Identity!.IsAuthenticated)
+﻿@using System.Security.Claims;
+@if (User.Identity!.IsAuthenticated)
 {
     <ul class="navbar-nav me-0">
         <li class="nav-item dropdown">
@@ -9,6 +10,13 @@
                 <li><a class="dropdown-item" asp-action="Index" asp-controller="Member">Profil</a></li>
                 <li><a class="dropdown-item" asp-action="PasswordChange" asp-controller="Member">Şifre Değiştir</a></li>
                 <li><a class="dropdown-item" asp-action="UserEdit" asp-controller="Member">Profil Düzenle</a></li>
+                <li><a class="dropdown-item" asp-action="Claims" asp-controller="Member">Claims</a></li>
+                @{
+                    if (User.HasClaim(x=>x.Type==ClaimTypes.Role && x.Value.ToLower()=="admin"))
+                    {
+                        <li><a class="dropdown-item" asp-area="admin" asp-action="Index" asp-controller="Home">Admin</a></li>
+                    }
+                }
                 <li><a class="dropdown-item" asp-route-returnurl="/Home/Index" asp-action="Logout" asp-controller="Member">Çıkış Yap</a></li>
             </ul>
         </li>

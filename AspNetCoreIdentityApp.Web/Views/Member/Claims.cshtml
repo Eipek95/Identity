@@ -1,0 +1,27 @@
+﻿@model List<ClaimViewModel>
+@{
+    ViewData["Title"] = "Claims";
+}
+
+<h2>Claim(Talep) Listesi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Issuer(Dağıtan)</th>
+            <th>Tipi</th>
+            <th>Değeri</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Issuer</td>
+                <td>@item.Type</td>
+                <td>@item.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

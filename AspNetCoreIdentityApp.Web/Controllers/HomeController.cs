@@ -5,6 +5,7 @@ using AspNetCoreIdentityApp.Web.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -97,16 +98,26 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             }, request.Password);
 
-
-            if (identityResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
-                TempData["SuccessMessage"] = "Üyelik Kayıt İşlemi Başarıyla Gerçekleşmiştir";//cookie de tek seferlik olarak taşınıyor
-                return RedirectToAction(nameof(HomeController.SignUp));
+                ModelState.AddModelErrorList(identityResult.Errors.Select(x => x.Description).ToList());
+                return View();
+
             }
 
-            ModelState.AddModelErrorList(identityResult.Errors.Select(x => x.Description).ToList());
+            var exchangeExpireClaim = new Claim("ExchangeExpireDate", DateTime.Now.AddDays(10).ToString());//cookie ye yazdırma
+            var user = await _userManager.FindByNameAsync(request.UserName);//kullanıcı bul
+            var claimResult = await _userManager.AddClaimAsync(user!, exchangeExpireClaim);//kullanıcıya claim ekle
 
-            return View();
+
+            if (!claimResult.Succeeded)
+            {
+                ModelState.AddModelErrorList(claimResult.Errors.Select(x => x.Description).ToList());
+                return View();
+            }
+            TempData["SuccessMessage"] = "Üyelik Kayıt İşlemi Başarıyla Gerçekleşmiştir";//cookie de tek seferlik olarak taşınıyor
+            return RedirectToAction(nameof(HomeController.SignUp));
+
         }
 
 

@@ -1,7 +1,9 @@
+using AspNetCoreIdentityApp.Web.ClaimProvider;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
 using AspNetCoreIdentityApp.Web.OptionsModels;
 using AspNetCoreIdentityApp.Web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -25,8 +27,18 @@ builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddIdentityWithExt();//identity ayarlarýnýn yapýldýgý class
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
 
 
+builder.Services.AddAuthorization(policy =>
+{
+    policy.AddPolicy("AnkaraPolicy", policy =>
+    {
+        policy.RequireClaim("city", "ankara");
+        //policy.RequireRole("admin");
+        //policy.RequireClaim("city", "ankara","mmanisa");//sayfayý ankara ve manisada yaþayanlar görüntüleyebilir
+    });
+});
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     var cookieBuilder = new CookieBuilder();

@@ -24,6 +24,10 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
+
+            var userClaims = User.Claims.ToList();// HttpContext.User.Claims.ToList(); --->controller olmadan bir business veya başka bir class üzerinden erişmek istersek
+            //var email = User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.Email);
+
             var currentUser = (await _userManager.FindByNameAsync(User.Identity!.Name!))!;
             var userViewModel = new UserViewModel
             {
@@ -162,7 +166,25 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             return View(userEditViewModel);
         }
+        [HttpGet]
+        public IActionResult Claims()
+        {
+            var userClaimList = User.Claims.Select(x => new ClaimViewModel()
+            {
+                Issuer = x.Issuer,
+                Type = x.Type,
+                Value = x.Value
+            }).ToList();
+            return View(userClaimList);
+        }
 
+
+        [Authorize(Policy = "AnkaraPolicy")]
+        [HttpGet]
+        public IActionResult AnkaraPage()
+        {
+            return View();
+        }
         public IActionResult AccessDenied(string ReturnUrl)
         {
             string message = string.Empty;

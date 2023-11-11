@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class RolesController : Controller
     {
@@ -30,12 +31,12 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
             return View(roles);
         }
 
-        [HttpGet, Authorize(Roles = "admin,role-action")]
+        [HttpGet, Authorize(Roles = "role-action")]
         public IActionResult RoleCreate()
         {
             return View();
         }
-        [HttpPost, Authorize(Roles = "admin,role-action")]
+        [HttpPost, Authorize(Roles = "role-action")]
         public async Task<IActionResult> RoleCreate(RoleCreateViewModel request)
         {
             var result = await _roleManager.CreateAsync(new AppRole()
@@ -53,7 +54,7 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(RolesController.Index));
         }
 
-        [HttpGet, Authorize(Roles = "admin,role-action")]
+        [HttpGet, Authorize(Roles = "role-action")]
         public async Task<IActionResult> RoleUpdate(string id)
         {
             var roleToUpdate = await _roleManager.FindByIdAsync(id);
@@ -68,7 +69,7 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
                 RoleName = roleToUpdate!.Name!
             });
         }
-        [HttpPost, Authorize(Roles = "admin,role-action")]
+        [HttpPost, Authorize(Roles = "role-action")]
         public async Task<IActionResult> RoleUpdate(RoleUpdateViewModel request)
         {
             var roleToUpdate = await _roleManager.FindByIdAsync(request.Id);
