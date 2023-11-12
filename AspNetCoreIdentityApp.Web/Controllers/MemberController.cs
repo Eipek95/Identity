@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -150,8 +151,15 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             }
             await _userManager.UpdateSecurityStampAsync(currentUser);
             await _signInManager.SignOutAsync();
-            await _signInManager.SignInAsync(currentUser, true);
 
+            if (request.BirthDate.HasValue)
+            {
+                await _signInManager.SignInWithClaimsAsync(currentUser, true, new[] { new Claim("birthdate", currentUser.BirthDate!.Value.ToString()) });//değişiklik yapınca bilgilerde doğum tarihini cookie ye ekle.claims olarak ekle
+            }
+            else
+            {
+                await _signInManager.SignInAsync(currentUser, true);//normal ekle cookieye
+            }
             TempData["SuccessMessage"] = "Üye Bilgileri Başarıyla Değiştirilmiştir.";
 
             var userEditViewModel = new UserEditViewModel()
@@ -182,6 +190,20 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         [Authorize(Policy = "AnkaraPolicy")]
         [HttpGet]
         public IActionResult AnkaraPage()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "ExchangePolicy")]
+        [HttpGet]
+        public IActionResult ExchangePage()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "VioloncePolicy")]
+        [HttpGet]
+        public IActionResult VioloncePage()
         {
             return View();
         }

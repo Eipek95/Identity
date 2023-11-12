@@ -56,11 +56,10 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 return View();
             }
 
+
+
             var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true);
-            if (signInResult.Succeeded)
-            {
-                return Redirect(returnUrl!);
-            }
+
 
             if (signInResult.IsLockedOut)
             {
@@ -68,17 +67,23 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 return View();
 
             }
-
-
-
-            ModelState.AddModelErrorList(new List<string>()
+            if (!signInResult.Succeeded)
+            {
+                ModelState.AddModelErrorList(new List<string>()
             {
                 "Email veya Şifre Yanlış",
                 $"Başarısız Giriş Sayısı = {await _userManager.GetAccessFailedCountAsync(hasUser)}"
             });
 
+                return View();
+            }
 
-            return View();
+            if (hasUser.BirthDate.HasValue)
+            {
+                await _signInManager.SignInWithClaimsAsync(hasUser, request.RememberMe, new[] { new Claim("birthdate", hasUser.BirthDate.Value.ToString()) });//birthdate adını ViolonceRequirement içinde kullandık
+                //cookie ye değer eklemenin başka bir yolu bu yol diğerine göre daha performanslı
+            }
+            return Redirect(returnUrl!);
         }
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel request)

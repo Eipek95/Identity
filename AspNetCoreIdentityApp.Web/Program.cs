@@ -2,8 +2,10 @@ using AspNetCoreIdentityApp.Web.ClaimProvider;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
 using AspNetCoreIdentityApp.Web.OptionsModels;
+using AspNetCoreIdentityApp.Web.Requirements;
 using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -28,6 +30,8 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddIdentityWithExt();//identity ayarlarýnýn yapýldýgý class
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, ExhangeExpireRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, ViolonceRequirementHandler>();
 
 
 builder.Services.AddAuthorization(policy =>
@@ -38,7 +42,19 @@ builder.Services.AddAuthorization(policy =>
         //policy.RequireRole("admin");
         //policy.RequireClaim("city", "ankara","mmanisa");//sayfayý ankara ve manisada yaþayanlar görüntüleyebilir
     });
+
+    policy.AddPolicy("ExchangePolicy", policy =>
+    {
+        policy.AddRequirements(new ExhangeExpireRequirement());
+    });
+
+    policy.AddPolicy("VioloncePolicy", policy =>
+    {
+        policy.AddRequirements(new ViolonceRequirement() { ThresholdAge = 18 });
+    });
 });
+
+
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     var cookieBuilder = new CookieBuilder();
