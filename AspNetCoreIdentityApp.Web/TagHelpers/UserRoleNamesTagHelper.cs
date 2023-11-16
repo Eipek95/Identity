@@ -26,7 +26,7 @@ namespace AspNetCoreIdentityApp.Web.TagHelpers
             userRoles.ToList().ForEach(x =>
             {
                 stringBuilder.Append(@$"
-               <span class='badge {(x.ToLower() == "admin" ? "bg-danger" : (x.ToLower() == "editor" ? "bg-secondary" : (x.ToLower() == "role-action" ? "bg-primary" : "")))} mx-1'>{x.ToLower()}</span>
+               <span class='badge {(x.ToLower() == "admin" ? "bg-danger" : (x.ToLower() == "editor" ? "bg-secondary" : (x.ToLower() == "role-action" ? "bg-primary" : "bg-success")))} mx-1'>{x.ToLower()}</span>
                 ");
             });
 

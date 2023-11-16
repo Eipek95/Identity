@@ -2,7 +2,9 @@ using AspNetCoreIdentityApp.Web.ClaimProvider;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
 using AspNetCoreIdentityApp.Web.OptionsModels;
+using AspNetCoreIdentityApp.Web.PermissionsRoot;
 using AspNetCoreIdentityApp.Web.Requirements;
+using AspNetCoreIdentityApp.Web.Seeds;
 using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +54,33 @@ builder.Services.AddAuthorization(policy =>
     {
         policy.AddRequirements(new ViolonceRequirement() { ThresholdAge = 18 });
     });
+
+
+    policy.AddPolicy("OrderPermissionReadOrDelete", policy =>
+    {
+        //policy.RequireClaim("permission", Permissions.Order.Read, Permissions.Order.Delete, Permissions.Stock.Delete); -->eðer virgülle verirsek veya anlamýna gelir herhangi birine sahip olan sayfaya eriþebilir biz veya deðil ve istiyoruz ayrý ayrý yazarýz o zaman
+        policy.RequireClaim("permission", Permissions.Order.Read);
+        policy.RequireClaim("permission", Permissions.Order.Delete);
+        policy.RequireClaim("permission", Permissions.Stock.Delete);
+    });
+
+
+    policy.AddPolicy("Permissions.Order.Read", policy =>
+    {
+        policy.RequireClaim("permission", Permissions.Order.Read);
+    });
+
+
+    policy.AddPolicy("Permissions.Order.Delete", policy =>
+    {
+        policy.RequireClaim("permission", Permissions.Order.Delete);
+    });
+
+
+    policy.AddPolicy("Permissions.Stock.Delete", policy =>
+    {
+        policy.RequireClaim("permission", Permissions.Stock.Delete);
+    });
 });
 
 
@@ -70,7 +99,12 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())///uygulama ayaða kalkarken burasý bir kere çalýþacak 
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();//rolemanager scopelar bittiði an memoryden düþecek
 
+    await PermissionSeed.Seed(roleManager);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
