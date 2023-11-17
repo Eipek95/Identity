@@ -1,7 +1,7 @@
-﻿using AspNetCoreIdentityApp.Web.Extensions;
-using AspNetCoreIdentityApp.Web.Models;
+﻿using AspNetCoreIdentityApp.Core.ViewModel;
+using AspNetCoreIdentityApp.Repository.Models;
+using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Services;
-using AspNetCoreIdentityApp.Web.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

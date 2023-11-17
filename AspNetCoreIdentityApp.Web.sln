@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Web", "AspNetCoreIdentityApp.Web\AspNetCoreIdentityApp.Web.csproj", "{946E3576-0CC8-40F4-A0A7-D940507F155F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreIdentityApp.Web", "AspNetCoreIdentityApp.Web\AspNetCoreIdentityApp.Web.csproj", "{946E3576-0CC8-40F4-A0A7-D940507F155F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Core", "AspNetCoreIdentityApp.Core\AspNetCoreIdentityApp.Core.csproj", "{CCFE569D-B34E-467F-A305-5D39D4D2B212}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Repository", "AspNetCoreIdentityApp.Repository\AspNetCoreIdentityApp.Repository.csproj", "{811D2DA2-149F-46C7-90D0-536C8642327C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Service", "AspNetCoreIdentityApp.Service\AspNetCoreIdentityApp.Service.csproj", "{D60A61B3-52CB-4448-AA2B-19B17960C752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{946E3576-0CC8-40F4-A0A7-D940507F155F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{946E3576-0CC8-40F4-A0A7-D940507F155F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{946E3576-0CC8-40F4-A0A7-D940507F155F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCFE569D-B34E-467F-A305-5D39D4D2B212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCFE569D-B34E-467F-A305-5D39D4D2B212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCFE569D-B34E-467F-A305-5D39D4D2B212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCFE569D-B34E-467F-A305-5D39D4D2B212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{811D2DA2-149F-46C7-90D0-536C8642327C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811D2DA2-149F-46C7-90D0-536C8642327C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811D2DA2-149F-46C7-90D0-536C8642327C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811D2DA2-149F-46C7-90D0-536C8642327C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D60A61B3-52CB-4448-AA2B-19B17960C752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60A61B3-52CB-4448-AA2B-19B17960C752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D60A61B3-52CB-4448-AA2B-19B17960C752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D60A61B3-52CB-4448-AA2B-19B17960C752}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

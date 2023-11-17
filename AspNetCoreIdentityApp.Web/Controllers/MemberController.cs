@@ -1,6 +1,7 @@
-﻿using AspNetCoreIdentityApp.Web.Extensions;
-using AspNetCoreIdentityApp.Web.Models;
-using AspNetCoreIdentityApp.Web.ViewModel;
+﻿using AspNetCoreIdentityApp.Core.Models;
+using AspNetCoreIdentityApp.Core.ViewModel;
+using AspNetCoreIdentityApp.Repository.Models;
+using AspNetCoreIdentityApp.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
