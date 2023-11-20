@@ -2,10 +2,10 @@ using AspNetCoreIdentityApp.Core.OptionsModels;
 using AspNetCoreIdentityApp.Core.PermissionsRoot;
 using AspNetCoreIdentityApp.Repository.Models;
 using AspNetCoreIdentityApp.Repository.Seeds;
+using AspNetCoreIdentityApp.Service.Services;
 using AspNetCoreIdentityApp.Web.ClaimProvider;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Requirements;
-using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,7 +37,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, ExhangeExpireRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, ViolonceRequirementHandler>();
-
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddAuthorization(policy =>
 {
